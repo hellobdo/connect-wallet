@@ -1,11 +1,16 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSyncProviders } from "../hooks/useSyncProviders"
 import { formatAddress } from "../utils/index"
 import '../styles/dialogModal.css'
 
-export const DiscoverWalletProviders = () => {
-  const [selectedWallet, setSelectedWallet] = useState<EIP6963ProviderDetail>()
-  const [userAccount, setUserAccount] = useState<string>("")
+type ChildProps = {
+  setSelectedWallet: (provider: EIP6963ProviderDetail) => void;
+  setUserAccount: (account: string) => void; 
+  userAccount: string;
+  selectedWallet: EIP6963ProviderDetail|undefined;
+};
+
+export const DiscoverWalletProviders: React.FC<ChildProps> = ( {setSelectedWallet, setUserAccount, userAccount, selectedWallet} ) => {
   const providers = useSyncProviders()
 
   // Connect to the selected provider using eth_requestAccounts.
