@@ -1,0 +1,41 @@
+name: Node.js CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@latest
+
+      # Install jq for extracting the Node version
+      - name: Install jq (for JSON parsing)
+        run: sudo apt-get install jq
+
+      # Extract the Node version from package.json's engines field
+      - name: Set up Node.js from package.json
+        run: |
+          NODE_VERSION=$(jq -r '.engines.node' package.json)
+          echo "Using Node.js version: $NODE_VERSION"
+          echo "NODE_VERSION=$NODE_VERSION" >> $GITHUB_ENV
+        shell: bash
+
+      # Set up Node.js using the version from package.json
+      - name: Set up Node.js
+        uses: actions/setup-node@latest
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
