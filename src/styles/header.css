@@ -1,0 +1,38 @@
+.connected-status {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 20px;
+}
+
+.blinking-ball {
+  width: 10px;
+  height: 10px;
+  background-color: green;
+  border-radius: 50%;
+  margin-right: 10px;
+  animation: blink 1.5s linear infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  30% {
+    opacity: 0.3;
+  }
+}
+
+.wallet-provider {
+  display: flex;
+  align-items: center;
+  margin-left: 10px; /* Add margin to create space between userAccount and icon */
+}
+
+.wallet-icon {
+  width: 24px;
+  height: 24px;
+  margin-left: 5px;
+}

@@ -20,8 +20,8 @@ export const DiscoverWalletProviders: React.FC<ChildProps> = ( {setSelectedWalle
         method: "eth_requestAccounts"
       })
 
-      setSelectedWallet(providerWithInfo)
-      setUserAccount(accounts?.[0])
+      setSelectedWallet(providerWithInfo);
+      setUserAccount(accounts?.[0]);
     } catch (error) {
       console.error(error)
     }
@@ -44,16 +44,6 @@ export const DiscoverWalletProviders: React.FC<ChildProps> = ( {setSelectedWalle
         }
       </div>
       <hr />
-      <p>{userAccount ? "" : "No "}Wallet Selected</p>
-      {userAccount &&
-        <div>
-          <div>
-            <img src={selectedWallet.info.icon} alt={selectedWallet.info.name} />
-            <div>{selectedWallet.info.name}</div>
-            <div>({formatAddress(userAccount)})</div>
-          </div>
-        </div>
-      }
     </>
   )
 }
