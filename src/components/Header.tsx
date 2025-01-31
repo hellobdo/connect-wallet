@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import '../styles/header.css';
 import { DiscoverWalletProviders } from "../components/DiscoverWalletProdivers"
 import Button from '@mui/material/Button';
