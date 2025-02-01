@@ -1,5 +1,6 @@
 {
   "name": "connectwallet",
+  "homepage": "https://hellobdo.github.io/connect-wallet",
   "private": true,
   "version": "0.0.0",
   "type": "module",
