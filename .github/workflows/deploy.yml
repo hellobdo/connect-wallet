@@ -1,37 +1,37 @@
-name: Deploy React App to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main  # Trigger this workflow on pushes to the `main` branch
+      - main  # Trigger deployment on push to the `main` branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout the code
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # Step 2: Set up Node.js environment
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '22'  # You can specify the version of Node.js you want to use
+      # Step 2: Set up Node.js (only if you're using a Node.js project like React)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
 
-    # Step 3: Install dependencies
-    - name: Install dependencies
-      run: npm install
+      # Step 3: Install dependencies (if you’re using npm)
+      - name: Install dependencies
+        run: npm install  # Or `yarn install` if you're using Yarn
 
-    # Step 4: Build the React app
-    - name: Build React app
-      run: npm run build
+      # Step 4: Build the project (change if you're using a different build tool)
+      - name: Build project
+        run: npm run build  # For React, this creates the 'build' folder
 
-    # Step 5: Deploy to GitHub Pages
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}  # Use the built-in GitHub token for authentication
-        publish_dir: ./build  # The directory to be published
-        publish_branch: gh-pages  # The branch to push the build to
+      # Step 5: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages  # The branch to deploy to (use `gh-pages` for GitHub Pages)
+          folder: build     # The folder containing your built files (use 'build' for React apps)
+          token: ${{ secrets.GITHUB_TOKEN }}  # Token for authentication (GitHub automatically provides this)
