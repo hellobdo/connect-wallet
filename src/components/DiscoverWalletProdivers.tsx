@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react"
 import { useSyncProviders } from "../hooks/useSyncProviders"
-import { formatAddress } from "../utils/index"
 import '../styles/dialogModal.css'
 
 type ChildProps = {
@@ -10,7 +8,7 @@ type ChildProps = {
   selectedWallet: EIP6963ProviderDetail|undefined;
 };
 
-export const DiscoverWalletProviders: React.FC<ChildProps> = ( {setSelectedWallet, setUserAccount, userAccount, selectedWallet} ) => {
+export const DiscoverWalletProviders: React.FC<ChildProps> = ( {setSelectedWallet, setUserAccount} ) => {
   const providers = useSyncProviders()
 
   // Connect to the selected provider using eth_requestAccounts.
@@ -18,10 +16,10 @@ export const DiscoverWalletProviders: React.FC<ChildProps> = ( {setSelectedWalle
     try {
       const accounts = await providerWithInfo.provider.request({
         method: "eth_requestAccounts"
-      })
+      }) as string[];
 
-      setSelectedWallet(providerWithInfo)
-      setUserAccount(accounts?.[0])
+      setSelectedWallet(providerWithInfo);
+      setUserAccount(accounts?.[0]);
     } catch (error) {
       console.error(error)
     }
@@ -44,16 +42,6 @@ export const DiscoverWalletProviders: React.FC<ChildProps> = ( {setSelectedWalle
         }
       </div>
       <hr />
-      <p>{userAccount ? "" : "No "}Wallet Selected</p>
-      {userAccount &&
-        <div>
-          <div>
-            <img src={selectedWallet.info.icon} alt={selectedWallet.info.name} />
-            <div>{selectedWallet.info.name}</div>
-            <div>({formatAddress(userAccount)})</div>
-          </div>
-        </div>
-      }
     </>
   )
 }
